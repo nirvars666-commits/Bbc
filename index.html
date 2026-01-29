@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Silent Anime Girl</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:#080808;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+}
+
+.container{
+    max-width:420px;
+    width:100%;
+    text-align:center;
+    position:relative;
+}
+
+.anime-box{
+    position:relative;
+    display:inline-block;
+}
+
+/* Anime Image */
+.anime-box img{
+    width:85%;
+    border-radius:20px;
+    box-shadow:0 0 35px rgba(255,0,180,0.6);
+}
+
+/* Lip sync effect */
+.lip-sync::after{
+    content:'';
+    position:absolute;
+    bottom:18%;
+    left:50%;
+    transform:translateX(-50%);
+    width:40px;
+    height:8px;
+    background:#ff4da6;
+    border-radius:50%;
+    animation:talk 0.25s infinite alternate;
+}
+
+@keyframes talk{
+    from{ height:6px; }
+    to{ height:14px; }
+}
+
+/* Buttons */
+.controls{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+    padding:0 25px;
+}
+
+button{
+    padding:14px 22px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#startBtn{
+    background:#ff2aa1;
+    color:white;
+}
+
+#micBtn{
+    background:#111;
+    color:#00ff99;
+    font-size:22px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="anime-box" id="animeGirl">
+        <!-- New anime girl from another website -->
+        <img src="https://wallpapercave.com/wp/wp8984734.jpg">
+    </div>
+
+    <div class="controls">
+        <button id="startBtn">START</button>
+        <button id="micBtn">🎤</button>
+    </div>
+
+</div>
+
+<script>
+const girl = document.getElementById("animeGirl");
+let active = false;
+
+// START → lipsync on
+document.getElementById("startBtn").onclick = () => {
+    girl.classList.add("lip-sync");
+    active = true;
+};
+
+// MIC hold → lipsync off
+const mic = document.getElementById("micBtn");
+
+function stopLip(){
+    girl.classList.remove("lip-sync");
+}
+
+function startLip(){
+    if(active) girl.classList.add("lip-sync");
+}
+
+// mobile
+mic.addEventListener("touchstart", stopLip);
+mic.addEventListener("touchend", startLip);
+
+// pc
+mic.addEventListener("mousedown", stopLip);
+mic.addEventListener("mouseup", startLip);
+</script>
+
+</body>
+</html>
